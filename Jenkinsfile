@@ -10,7 +10,7 @@ pipeline {
                 sh "mvn clean compile"
          }
        }
-     {
+     
     stage('Docker node test') {
       agent {
         docker {
