@@ -36,6 +36,14 @@ pipeline {
      sh 'docker push 988080akk/my-pipeline:1.0.0'
    }
        }
+    stage('Run Container on Dev Server'){
+         steps {
+     def dockerRun = 'docker run -p 8080:8080 -d --name my-app 988080akk/my-pipeline:1.0.0'
+     sshagent(['dev-server']) {
+       sh "ssh -o StrictHostKeyChecking=no jenkins-job@172.0.0.2 ${dockerRun}"
+     }
+   }
+       }
           stage('deployment stage') {
               steps {
                 sh "mvn deploy"
