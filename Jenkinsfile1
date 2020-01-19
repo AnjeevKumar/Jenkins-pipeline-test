@@ -8,11 +8,12 @@ pipeline {
         stage('Compile stage') {
             steps {
                 sh "mvn clean compile" 
-         }
-       }
-       stage('Build Docker Image'){
-              sh 'docker build -t 988080akk/my-pipeline:2.0.0 .'
-   }
+        }
+    }
+
+         stage('testing stage') {
+             steps {
+                sh "mvn test"
         }
     }
 
