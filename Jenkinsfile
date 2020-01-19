@@ -10,6 +10,19 @@ pipeline {
                 sh "mvn clean compile"
          }
        }
+     {
+    stage('Docker node test') {
+      agent {
+        docker {
+          image 'node:7-alpine'
+          args '--name docker-node' // list any args
+        }
+      }
+      steps {
+        // Steps run in node:7-alpine docker container on docker slave
+        sh 'node --version'
+      }
+    }
        stage('Build Docker Image'){
          steps {
               sh 'docker build -t 988080akk/my-pipeline:1.0.0 .'
