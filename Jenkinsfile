@@ -11,11 +11,14 @@ pipeline {
          }
        }
        stage('Build Docker Image'){
-              sh 'docker build -t 988080akk/my-pipeline:2.0.0 .'
+              sh 'docker build -t 988080akk/my-pipeline:1.0.0 .'
    }
-        }
-    }
-
+       stage('Push Docker Image'){
+     withCredentials([string(credentialsId: 'mydockerhubpasswd', variable: 'mydockerhubpswd')]) {
+        sh "docker login -u 988080akk -p ${mydockerhubpswd}"
+     }
+     sh 'docker push 988080akk/my-pipeline:1.0.0'
+   }
           stage('deployment stage') {
               steps {
                 sh "mvn deploy"
